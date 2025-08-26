@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Knobli</title>
+  <!-- Подключение стилей -->
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+
+  <header class="section">
+ <div class="bergen-santis">
+
+    <div class="header-wrapper">
+        <div class="header-content">
+            <img src="./bilder/knobli2.png" alt="Logo" class="head-logo" id="logo">
+            <h1 class="  head">Knobli</h1>
+        </div>
+        <p class="header-tagline">Dein Begleiter in die Welt der Mathematik</p>
+    </div>
+</div>
+
+    <nav>
+        <a href="#projekt">Über Projekt</a>
+        <a href="#aufgabe">Aufgaben</a>
+        <a href="#übermich">Über mich</a>
+        <a href="#kontakte">Kontakte</a>
+        
+    </nav>
+  </header>
+
+  <main class="section">
+
+    <div class="grus">
+    <h2>Willkommen bei Knobli!</h2>
+    <p>Wir haben diese Webseite für Kinder und ihre Eltern erstellt, damit Eltern ganz einfach Mathematikaufgaben für ihre Kinder generieren können.</p>
+    <p>Unser Ziel ist es, eine grosse Vielfalt an Materialien anzubieten, einschliesslich Logik, Geometrie und Algebra.</p>
+    <p>Aktuell sind jedoch zunächst einfache Aufgaben verfügbar, die Kinder lösen können. Zusätzlich gibt es die Möglichkeit, die Aufgaben zu überprüfen und auszudrucken.</p>
+    </div>
+
+    <div class="aufgabe">
+        <h2>Aufgaben:</h2>
+      
+        <div class="tab-links">
+            <a href="#rechen" class="tab-link" id="rechen-tab">Rechenbeispiele</a>
+            <a href="#text" class="tab-link" id="text-tab">Textaufgaben</a>
+          </div>
+<!-- ********** -->
+          <div id="rechen-submenu" class="tab-submenu" style="display:none; text-align:center;">
+            <a href="#rechen-üblich" class="tab-link" id="toggle-filters">Grundrechenarten</a>
+            <a href="#rechen-prozente" class="tab-link disabled">Prozente</a>
+            <a href="#rechen-brüche" class="tab-link disabled">Brüche</a>
+            <a href="#rechen-proportionen" class="tab-link disabled">Proportionen</a>
+            <a href="#rechen-reihenfolge" class="tab-link disabled">Punkt vor Strich</a>
+        </div>
+
+<!-- *********** -->
+
+<div id="text-submenu" class="tab-submenu" style="display:none; text-align:center;">
+    <a href="#text-geschwindigkeit" class="tab-link ">Geschwindigkeit / Zeit </a>
+    <a href="#text-arbeit" class="tab-link disabled">Arbeit / Produktion</a>
+    <a href="#text-volumen" class="tab-link disabled">Volumen / Menge</a>
+    <a href="#text-geld" class="tab-link disabled">Geld / Preise</a>
+    <a href="#text-geom" class="tab-link disabled">Temperatur / Zeit </a>
+</div>
+
+<!-- ******Grundrechenarten***** -->
+<div class="filters-container" id="rechenarten-filter" style="display:none;">
+
+    <!-- Art der Operationen -->
+    <p>Wählen Sie bitte Kriterien der Aufgabe</p>
+    <div class="filter">
+            <label for="operationen-filter">Art der Operationen:</label>
+        <select id="operationen-filter" name="operationen-filter">
+            <option value="">-- wählen --</option>
+            <option value="addition">Addition (+)</option>
+            <option value="subtraktion">Subtraktion (−)</option>
+            <option value="multiplikation">Multiplikation (×)</option>
+            <option value="division">Division (÷)</option>            
+            <option value="mischung">Gemischt</option>            
+        </select>
+    </div>
+
+    <!-- Anzahl der Zahlen -->
+    <div class="filter">
+        <label for="anzahl-zahlen-filter">Anzahl der Zahlen:</label>
+        <select id="anzahl-zahlen-filter" name="anzahl-zahlen-filter">
+            <option value="">-- wählen --</option>
+            <option value="2">2 Zahlen</option>
+            <option value="3">3 Zahlen</option>
+            <option value="4">4 Zahlen</option>
+            <option value="5">5 Zahlen</option>
+            <option value="6">6 Zahlen</option>
+        </select>
+    </div>
+
+    <!-- Schwierigkeitsgrad -->
+    <div class="filter">
+        <label for="schwierigkeit-filter">Schwierigkeitsgrad:</label>
+        <select id="schwierigkeit-filter" name="schwierigkeit-filter">
+            <option value="">-- wählen --</option>
+            <option value="einfach">Einfache Zahlen (1–10)</option>
+            <option value="mittel">Mittlere Zahlen (10–100)</option>
+            <option value="gross">Grosse Zahlen (100–1000)</option>
+            <option value="sehr-gross">Sehr grosse Zahlen (1000–10000)</option>
+            <option value="riesig">Riesige Zahlen (10000–100000)</option>
+            <option value="millionen">Millionen</option>
+            <option value="zehn-millionen">Zehn Millionen</option>
+          
+        </select>
+    </div>
+
+    <!-- Division: Mit oder ohne Rest -->
+    <div class="filter">
+        <label for="division-rest-filter">Mit oder ohne Rest:</label>
+        <select id="division-rest-filter" name="division-rest-filter">
+            <option value="">-- wählen --</option>
+            <option value="mit-rest">Mit Rest</option>
+            <option value="ohne-rest">Ohne Rest</option>
+        </select>
+    </div>
+
+    <!-- Anzahl der Aufgaben -->
+    <div class="filter">
+        <label for="anzahl-aufgaben-filter">Anzahl der Aufgaben:</label>
+        <select id="anzahl-aufgaben-filter" name="anzahl-aufgaben-filter">
+            <option value="">-- wählen --</option>
+            <option value="5">5 Aufgaben</option>
+            <option value="10">10 Aufgaben</option>
+            <option value="20">20 Aufgaben</option>
+            <option value="50">50 Aufgaben</option>
+            <option value="100">100 Aufgaben</option>
+        </select>
+
+        
+    </div>
+ 
+<!-- FELD FÜR SCHON GENERIERTE BEISPIELE -->
+<a href="#" id="generate" class="tab-link">Generieren</a>
+
+<div id="aufgaben-container">
+    <h3>Ihre Aufgaben:</h3>
+    <ul id="aufgaben-liste"></ul>
+</div>
+
+ 
+
+</div>
+
+
+
+<!-- ********** -->
+
+
+</div>
+
+<div id="congrats" style="display:none;position:fixed;top:50%;left:50%;transform:translate(-50%, -50%) scale(0);font-size:3em;color:#2ecc71;transition: transform 1s ease;">Herzlichen Glückwunsch! Du bist ein Genie!</div>
+
+
+
+
+
+
+
+    <div class="übermich">
+        <h2>Über mich:</h2>
+        <div class="bio">
+            <img src="./bilder/alexa.png" alt="Oleksandra Hrynevska" class="bio-foto">
+           
+<p>Ich bin Oleksandra Hrynevska, erfahrene Klassenassistentin und Lehrerin aus Wittenbach.</p>
+
+<p>Mein Berufsweg begann mit dem Englischunterricht in der Primarschule. Innovative Unterrichtsmethoden sind meine Stärke.</p>
+
+<p>Ich liebe es, mit Kindern zu arbeiten, sie zu motivieren und spielerisch zu fördern. Als Mutter kenne ich die Bedürfnisse der Kinder gut, und mit dieser Webseite möchte ich meine Erfahrungen mit Ihnen teilen.</p>
+
+<p class="textbio">Derzeit arbeite ich als Klassenassistentin und setze meine Erfahrung ein, um Kinder bestmöglich zu unterstützen.</p>
+
+        </div>
+    </div>
+    
+    <div class="kont">
+        <h2>Kontakte:</h2>
+       
+        
+        <ul>
+            <p><strong> Oleksandra Hrynevska</strong></p>     
+            <li>Für Fragen oder Informationen können Sie mich gerne kontaktieren:</li>
+            <li><b>Telefonnummer: <a href="tel:+41796234647">+4179 623 4647</a></b></li>
+            <li><b>E-Mail: <a href="mailto:oleksandra.hrynevska@gmail.com">oleksandra.hrynevska@gmail.com</a></b></li>
+            <li><b>Adresse: St. Bruggwaldstrasse 92, 9300 Wittenbach, Schweiz</b></li>
+        </ul>
+    </div>
+
+</main>
+
+
+  <footer class="section bottom">
+    <p>&copy; 2025 Knobli</p>
+  </footer>
+
+  <!-- Подключение скриптов -->
+  <script src="./script.js"></script>
+</body>
+</html>
