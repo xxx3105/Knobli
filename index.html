@@ -40,7 +40,7 @@
     <p>Wie Bruce Lee einmal sagte:</p>
     <blockquote class="quote" cite="https://ru.citaty.net/tsitaty/468797-brius-li-ia-ne-boius-togo-kto-izuchaet-10-000-razlichnykh-udar/">
         <p>„Ich habe keine Angst vor dem, der 10.000 verschiedene Schläge lernt. Ich habe Angst vor dem, der einen Schlag 10.000 Mal übt.“</p>
-        <footer>— <cite>Bruce Lee</cite></footer>
+         
     </blockquote>
     <p>Genau so können Kinder hier durch wiederholtes Üben in Mathematik echte Meisterschaft entwickeln.</p>
 </div>
@@ -64,18 +64,21 @@
 <!-- *********** -->
 
 <div id="text-submenu" class="tab-submenu" style="display:none; text-align:center;">
-    <a href="#text-geschwindigkeit" class="tab-link ">Geschwindigkeit / Zeit </a>
+   <a href="#text-geschwindigkeit" class="tab-link" id="text-geschwindigkeit-link">Geschwindigkeit / Zeit</a>
     <a href="#text-arbeit" class="tab-link disabled">Arbeit / Produktion</a>
     <a href="#text-volumen" class="tab-link disabled">Volumen / Menge</a>
     <a href="#text-geld" class="tab-link disabled">Geld / Preise</a>
     <a href="#text-geom" class="tab-link disabled">Temperatur / Zeit </a>
 </div>
 
+
+
 <!-- ******Grundrechenarten***** -->
 <div class="filters-container" id="rechenarten-filter" style="display:none;">
+<p>Wählen Sie bitte Kriterien der Aufgabe</p>
 
     <!-- Art der Operationen -->
-    <p>Wählen Sie bitte Kriterien der Aufgabe</p>
+    
     <div class="filter">
             <label for="operationen-filter">Art der Operationen:</label>
         <select id="operationen-filter" name="operationen-filter">
@@ -142,19 +145,67 @@
         
     </div>
  
-<!-- FELD FÜR SCHON GENERIERTE BEISPIELE -->
 <a href="#" id="generate" class="tab-link">Generieren</a>
+
+</div>
+
+<!-- oben  filter für grundrehcnen -->
+
+<!-- ///TEXTAUFGABEN FILTER -->
+
+<div class="filters-container" id="geschwindigkeit-filter" style="display:none;">
+
+    <p>Wählen Sie bitte Kriterien der Aufgabe</p>
+    
+    <!-- Art der Operationen -->
+    <div class="filter">
+        <label for="geschwindigkeit-operation">Art der Operationen:</label>
+        <select id="geschwindigkeit-operation" name="geschwindigkeit-operation">
+            <option value="">-- wählen --</option>
+            <option value="geschwindigkeit">Geschwindigkeit berechnen</option>
+            <option value="strecke">Strecke berechnen</option>
+            <option value="zeit">Zeit berechnen</option>
+            <option value="mischung">Gemischt</option>
+        </select>
+    </div>
+
+    <!-- Anzahl der Aufgaben -->
+    <div class="filter">
+        <label for="anzahl-geschwindigkeit-aufgaben">Anzahl der Aufgaben:</label>
+        <select id="anzahl-geschwindigkeit-aufgaben" name="anzahl-geschwindigkeit-aufgaben">
+            <option value="">-- wählen --</option>
+            <option value="5">5 Aufgaben</option>
+            <option value="10">10 Aufgaben</option>
+            <option value="15">15 Aufgaben</option>
+            <option value="20">20 Aufgaben</option>
+            <option value="25">25 Aufgaben</option>
+        </select>
+    </div>
+
+    <!-- Schwierigkeitsgrad -->
+    <div class="filter">
+        <label for="geschwindigkeit-schwierigkeit">Schwierigkeitsgrad:</label>
+        <select id="geschwindigkeit-schwierigkeit" name="geschwindigkeit-schwierigkeit">
+            <option value="">-- wählen --</option>
+            <option value="einfach">Einfach</option>
+            <option value="mittel">Mittel</option>
+            <option value="schwer">Schwer</option>
+        </select>
+    </div>
+
+    <a href="#" id="generate-geschwindigkeit" class="tab-link tab-link-margin">Generieren</a>
+
+</div>
+
+
+
+
+<!-- FELD FÜR SCHON GENERIERTE BEISPIELE -->
 
 <div id="aufgaben-container">
     <h3>Ihre Aufgaben:</h3>
     <ul id="aufgaben-liste"></ul>
 </div>
-
- 
-
-</div>
-
-
 
 <!-- ********** -->
 
@@ -162,11 +213,6 @@
 </div>
 
 <div id="congrats" style="display:none;position:fixed;top:50%;left:50%;transform:translate(-50%, -50%) scale(0);font-size:3em;color:#2ecc71;transition: transform 1s ease;">Herzlichen Glückwunsch! Du bist ein Genie!</div>
-
-
-
-
-
 
 
     <div class="übermich">

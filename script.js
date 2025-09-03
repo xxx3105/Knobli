@@ -695,3 +695,529 @@ document.getElementById("generate").addEventListener("click", function(e) {
     }
 });
 // ***********************ENDE Generator
+
+
+//TEXTAUFGABE GENERATO
+ // Функция для загрузки шаблонов из внешнего файла
+async function loadTemplates() {
+    try {
+        // Пробуем загрузить шаблоны из внешнего файла
+        const response = await fetch('aufgaben.html');
+        if (!response.ok) {
+            throw new Error('File not found');
+        }
+        
+        const html = await response.text();
+        
+        // Создаем временный элемент для парсинга HTML
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = html;
+        
+        // Ищем шаблоны
+        const templates = tempDiv.querySelector('#geschwindigkeit-templates');
+        if (templates) {
+            // Добавляем шаблоны в DOM
+            document.body.appendChild(templates.cloneNode(true));
+            console.log('Templates aus aufgaben.html geladen');
+            return true;
+        } else {
+            throw new Error('Templates nicht in Datei gefunden');
+        }
+    } catch (error) {
+         console.warn('Kann aufgaben.html nicht laden:', error.message, '- Erstelle Fallback-Templates');
+        
+        // Создаем fallback шаблоны
+        const fallbackTemplates = document.createElement('div');
+        fallbackTemplates.id = 'geschwindigkeit-templates';
+        fallbackTemplates.style.display = 'none';
+        fallbackTemplates.innerHTML = `
+            <!-- Template 1 -->
+            <div class="aufgabe-template" data-id="1" data-type="geschwindigkeit">
+                Ein Rennwagen fährt {strecke} km in {zeit} Stunden. Wie hoch ist seine Durchschnittsgeschwindigkeit?
+            </div>
+            
+            <!-- Template 2 -->
+            <div class="aufgabe-template" data-id="2" data-type="geschwindigkeit">
+                Ein Mountainbiker benötigt {zeit} Stunden für die {strecke} Kilometer lange Abfahrt. Berechne seine Geschwindigkeit.
+            </div>
+            
+            <!-- Template 3 -->
+            <div class="aufgabe-template" data-id="3" data-type="strecke">
+                Bei konstanten {geschwindigkeit} km/h, wie weit kommt eine Wanderin in {zeit} Stunden?
+            </div>
+            
+            <!-- Template 4 -->
+            <div class="aufgabe-template" data-id="4" data-type="strecke">
+                Ein Hochgeschwindigkeitszug fährt {geschwindigkeit} km/h. Welche Strecke legt er in {zeit} Stunden zurück?
+            </div>
+            
+            <!-- Template 5 -->
+            <div class="aufgabe-template" data-id="5" data-type="zeit">
+                Wie lange braucht ein Segelschiff für {strecke} km bei einer Geschwindigkeit von {geschwindigkeit} km/h?
+            </div>
+            
+            <!-- Template 6 -->
+            <div class="aufgabe-template" data-id="6" data-type="zeit">
+                Bei Reisegeschwindigkeit von {geschwindigkeit} km/h, wie lange dauert die Fahrt über {strecke} km?
+            </div>
+            
+            <!-- Template 7 -->
+            <div class="aufgabe-template" data-id="7" data-type="geschwindigkeit">
+                Ein E-Roller fährt {strecke} km in {zeit} Stunden. Welche Geschwindigkeit hat er?
+            </div>
+            
+            <!-- Template 8 -->
+            <div class="aufgabe-template" data-id="8" data-type="strecke">
+                Ein Kreuzfahrtschiff fährt {geschwindigkeit} km/h. Wie weit kommt es in {zeit} Stunden?
+            </div>
+            
+            <!-- Template 9 -->
+            <div class="aufgabe-template" data-id="9" data-type="zeit">
+                Ein Sportflugzeug fliegt {geschwindigkeit} km/h. Wie lange braucht es für die {strecke} km lange Strecke?
+            </div>
+            
+            <!-- Template 10 -->
+            <div class="aufgabe-template" data-id="10" data-type="geschwindigkeit">
+                {strecke} km in {zeit} Stunden zurückgelegt. Wie schnell war der Läufer?
+            </div>
+
+            <!-- Template 11 -->
+            <div class="aufgabe-template" data-id="11" data-type="geschwindigkeit">
+                Ein Rettungswagen legt {strecke} km in {zeit} Stunden zurück. Wie hoch war seine Durchschnittsgeschwindigkeit?
+            </div>
+            
+            <!-- Template 12 -->
+            <div class="aufgabe-template" data-id="12" data-type="strecke">
+                Ein Rennradfahrer fährt {geschwindigkeit} km/h. Welche Strecke schafft er in {zeit} Stunden?
+            </div>
+            
+            <!-- Template 13 -->
+            <div class="aufgabe-template" data-id="13" data-type="zeit">
+                Wie lange braucht ein Güterzug für {strecke} km bei {geschwindigkeit} km/h?
+            </div>
+            
+            <!-- Template 14 -->
+            <div class="aufgabe-template" data-id="14" data-type="geschwindigkeit">
+                Ein Motorrad fährt {strecke} km in {zeit} Stunden. Berechne die Geschwindigkeit.
+            </div>
+            
+            <!-- Template 15 -->
+            <div class="aufgabe-template" data-id="15" data-type="strecke">
+                Bei {geschwindigkeit} km/h, wie weit fährt ein Schulbus in {zeit} Stunden?
+            </div>
+            
+            <!-- Template 16 -->
+            <div class="aufgabe-template" data-id="16" data-type="zeit">
+                Ein U-Boot taucht {geschwindigkeit} km/h. Wie lange braucht es für {strecke} km?
+            </div>
+            
+            <!-- Template 17 -->
+            <div class="aufgabe-template" data-id="17" data-type="geschwindigkeit">
+                Ein Skateboarder fährt {strecke} km in {zeit} Stunden. Wie schnell ist er?
+            </div>
+            
+            <!-- Template 18 -->
+            <div class="aufgabe-template" data-id="18" data-type="strecke">
+                Ein Formel-1-Wagen fährt {geschwindigkeit} km/h. Welche Distanz legt er in {zeit} Stunden zurück?
+            </div>
+            
+            <!-- Template 19 -->
+            <div class="aufgabe-template" data-id="19" data-type="zeit">
+                Ein Helikopter fliegt {geschwindigkeit} km/h. Wie lange benötigt er für {strecke} km?
+            </div>
+            
+            <!-- Template 20 -->
+            <div class="aufgabe-template" data-id="20" data-type="geschwindigkeit">
+                {strecke} km in {zeit} Stunden geschafft. Wie schnell war die Radtour?
+            </div>
+
+            <!-- Template 21 -->
+            <div class="aufgabe-template" data-id="21" data-type="geschwindigkeit">
+                Ein Lieferwagen fährt {strecke} km in {zeit} Stunden. Wie hoch ist seine Geschwindigkeit?
+            </div>
+            
+            <!-- Template 22 -->
+            <div class="aufgabe-template" data-id="22" data-type="strecke">
+                Ein Schneemobil fährt {geschwindigkeit} km/h. Wie weit kommt es in {zeit} Stunden?
+            </div>
+            
+            <!-- Template 23 -->
+            <div class="aufgabe-template" data-id="23" data-type="zeit">
+                Wie lange braucht ein Eisbrecher für {strecke} km bei {geschwindigkeit} km/h?
+            </div>
+            
+            <!-- Template 24 -->
+            <div class="aufgabe-template" data-id="24" data-type="geschwindigkeit">
+                Ein Kanu fährt {strecke} km in {zeit} Stunden. Berechne die Geschwindigkeit.
+            </div>
+            
+            <!-- Template 25 -->
+            <div class="aufgabe-template" data-id="25" data-type="strecke">
+                Bei {geschwindigkeit} km/h, wie weit kommt ein Moped in {zeit} Stunden?
+            </div>
+            
+            <!-- Template 26 -->
+            <div class="aufgabe-template" data-id="26" data-type="zeit">
+                Ein Heißluftballon treibt mit {geschwindigkeit} km/h. Wie lange dauert {strecke} km?
+            </div>
+            
+            <!-- Template 27 -->
+            <div class="aufgabe-template" data-id="27" data-type="geschwindigkeit">
+                Ein Snowboarder fährt {strecke} km in {zeit} Stunden. Welche Geschwindigkeit hat er?
+            </div>
+            
+            <!-- Template 28 -->
+            <div class="aufgabe-template" data-id="28" data-type="strecke">
+                Ein Rettungsboot fährt {geschwindigkeit} km/h. Welche Strecke legt es in {zeit} Stunden zurück?
+            </div>
+            
+            <!-- Template 29 -->
+            <div class="aufgabe-template" data-id="29" data-type="zeit">
+                Ein Düsenjet fliegt {geschwindigkeit} km/h. Wie lange braucht er für {strecke} km?
+            </div>
+            
+            <!-- Template 30 -->
+            <div class="aufgabe-template" data-id="30" data-type="geschwindigkeit">
+                {strecke} km in {zeit} Stunden zurückgelegt. Wie schnell war das Motorboot?
+            </div>
+        `;
+        document.body.appendChild(fallbackTemplates);
+        console.log('Fallback-Templates erstellt');
+        return true;
+    }
+}
+
+// Функция генерации задач Geschwindigkeit с использованием HTML шаблонов
+function generateGeschwindigkeitAufgaben(anzahl, operation, schwierigkeit) {
+    const aufgabenListe = document.getElementById('aufgaben-liste');
+    if (!aufgabenListe) {
+        console.error('Aufgabenliste nicht gefunden');
+        return;
+    }
+    
+    aufgabenListe.innerHTML = '';
+    
+    // Получаем все шаблоны из HTML
+    const allTemplates = document.querySelectorAll('#geschwindigkeit-templates .aufgabe-template');
+    if (allTemplates.length === 0) {
+        console.error('Keine Templates gefunden');
+        alert('Fehler: Templates konnten nicht geladen werden');
+        return;
+    }
+    
+    // Фильтруем шаблоны по выбранному типу операции
+    let filteredTemplates = Array.from(allTemplates);
+    if (operation !== 'mischung') {
+        filteredTemplates = filteredTemplates.filter(t => t.getAttribute('data-type') === operation);
+    }
+    
+    if (filteredTemplates.length === 0) {
+        alert('Keine Aufgaben für den ausgewählten Typ verfügbar');
+        return;
+    }
+    
+    // Перемешиваем шаблоны для случайного выбора
+    const shuffledTemplates = [...filteredTemplates].sort(() => Math.random() - 0.5);
+    
+    for (let i = 0; i < anzahl; i++) {
+        // Выбираем случайный шаблон
+        const templateIndex = i % shuffledTemplates.length;
+        const template = shuffledTemplates[templateIndex];
+        const templateText = template.textContent.trim();
+        const templateType = template.getAttribute('data-type');
+        
+        // Генерируем случайные значения в зависимости от сложности
+        let geschwindigkeit, strecke, zeit;
+        let correctAnswer;
+        
+        switch(schwierigkeit) {
+            case 'einfach':
+                // Простые числа, целые результаты
+                geschwindigkeit = Math.floor(Math.random() * 10) + 1; // 1-10
+                strecke = Math.floor(Math.random() * 10) + 1; // 1-10
+                zeit = Math.floor(Math.random() * 5) + 1; // 1-5
+                break;
+                
+            case 'mittel':
+                geschwindigkeit = Math.floor(Math.random() * 20) + 5; // 5-25
+                strecke = Math.floor(Math.random() * 50) + 10; // 10-60
+                zeit = Math.floor(Math.random() * 6) + 1; // 1-6
+                break;
+                
+            case 'schwer':
+                geschwindigkeit = Math.floor(Math.random() * 50) + 10; // 10-60
+                strecke = Math.floor(Math.random() * 100) + 20; // 20-120
+                zeit = Math.floor(Math.random() * 8) + 2; // 2-10
+                break;
+        }
+        
+        // Вычисляем правильный ответ и подготавливаем текст
+        let aufgabeText = templateText;
+        
+        switch(templateType) {
+            case 'geschwindigkeit':
+                // Для простого уровня гарантируем целое число
+                if (schwierigkeit === 'einfach') {
+                    correctAnswer = Math.round(strecke / zeit);
+                    strecke = correctAnswer * zeit; // Подгоняем значения
+                } else {
+                    correctAnswer = (strecke / zeit).toFixed(2);
+                }
+                aufgabeText = aufgabeText.replace('{strecke}', strecke).replace('{zeit}', zeit);
+                break;
+                
+            case 'strecke':
+                correctAnswer = geschwindigkeit * zeit;
+                if (schwierigkeit !== 'einfach') {
+                    correctAnswer = correctAnswer.toFixed(2);
+                }
+                aufgabeText = aufgabeText.replace('{geschwindigkeit}', geschwindigkeit).replace('{zeit}', zeit);
+                break;
+                
+            case 'zeit':
+                // Для простого уровня гарантируем целое число
+                if (schwierigkeit === 'einfach') {
+                    correctAnswer = Math.round(strecke / geschwindigkeit);
+                    strecke = correctAnswer * geschwindigkeit; // Подгоняем значения
+                } else {
+                    correctAnswer = (strecke / geschwindigkeit).toFixed(2);
+                }
+                aufgabeText = aufgabeText.replace('{strecke}', strecke).replace('{geschwindigkeit}', geschwindigkeit);
+                break;
+        }
+        
+        // Создаем элемент задачи
+        const li = document.createElement('li');
+        
+        const aufgabeSpan = document.createElement('span');
+        aufgabeSpan.className = 'aufgabe-text';
+        aufgabeSpan.textContent = `${i+1}) ${aufgabeText}`;
+        
+        const answerContainer = document.createElement('div');
+        answerContainer.className = 'answer-container';
+        
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.size = 10;
+        input.dataset.correctAnswer = correctAnswer;
+        
+        input.addEventListener('input', function() {
+            checkAnswer(this);
+        });
+        
+        const solution = document.createElement('span');
+        solution.textContent = ` (${correctAnswer})`;
+        solution.style.display = 'none';
+        solution.classList.add('solution');
+        
+        answerContainer.appendChild(input);
+        answerContainer.appendChild(solution);
+        
+        li.appendChild(aufgabeSpan);
+        li.appendChild(answerContainer);
+        aufgabenListe.appendChild(li);
+    }
+}
+
+// Функция проверки ответа
+function checkAnswer(input) {
+    const val = input.value.trim();
+    const correctAnswer = input.dataset.correctAnswer;
+    
+    if (val === '') {
+        input.style.backgroundColor = '';
+        return;
+    }
+    
+    // Проверяем числовой ответ (допускаем небольшую погрешность)
+    const userValue = parseFloat(val.replace(',', '.'));
+    const correctValue = parseFloat(correctAnswer);
+    
+    if (!isNaN(userValue) && Math.abs(userValue - correctValue) < 0.01) {
+        input.style.backgroundColor = '#c8f7c5';
+    } else {
+        input.style.backgroundColor = '#f7c5c5';
+    }
+    
+    // Проверка всех ответов
+    checkAllAnswers();
+}
+
+// Проверка всех ответов
+function checkAllAnswers() {
+    const inputs = document.querySelectorAll('#aufgaben-liste input');
+    const allCorrect = Array.from(inputs).every(input => {
+        return input.style.backgroundColor === 'rgb(200, 247, 197)';
+    });
+    
+    if (allCorrect && inputs.length > 0) {
+        showGratulationAndAnimateLogo();
+    }
+}
+
+// Функция поздравления
+function showGratulationAndAnimateLogo() {
+    alert('Gratulation! Alle Antworten sind richtig!');
+}
+
+// Функция для скрытия всех фильтров и сброса задач
+function hideAllFiltersAndReset() {
+    // Скрываем все фильтры
+    const rechenFilter = document.getElementById('rechenarten-filter');
+    const geschwindigkeitFilter = document.getElementById('geschwindigkeit-filter');
+    if (rechenFilter) rechenFilter.style.display = 'none';
+    if (geschwindigkeitFilter) geschwindigkeitFilter.style.display = 'none';
+    
+    // Очищаем список задач
+    const aufgabenListe = document.getElementById('aufgaben-liste');
+    if (aufgabenListe) aufgabenListe.innerHTML = '';
+    
+    // Скрываем контейнер с задачами
+    const aufgabenContainer = document.getElementById('aufgaben-container');
+    if (aufgabenContainer) aufgabenContainer.style.display = 'none';
+    
+    // Удаляем кнопки управления, если они есть
+    const showAnswersBtn = document.getElementById('show-answers-inline');
+    const printBtn = document.getElementById('print-aufgaben');
+    if (showAnswersBtn) showAnswersBtn.remove();
+    if (printBtn) printBtn.remove();
+}
+
+// Функция добавления кнопки управления
+function addControlButtons() {
+    // Удаляем старые кнопки, если они есть
+    const oldShowBtn = document.getElementById('show-answers-inline');
+    const oldPrintBtn = document.getElementById('print-aufgaben');
+    if (oldShowBtn) oldShowBtn.remove();
+    if (oldPrintBtn) oldPrintBtn.remove();
+    
+    // Кнопка "Alle Antworten zeigen"
+    const showBtn = document.createElement('button');
+    showBtn.textContent = 'Alle Antworten zeigen';
+    showBtn.className = 'tab-link';
+    showBtn.id = 'show-answers-inline';
+    showBtn.addEventListener('click', () => {
+        document.querySelectorAll('.solution').forEach(el => {
+            el.style.display = 'inline';
+        });
+    });
+    
+    // Кнопка "Drucken"
+    const printBtn = document.createElement('button');
+    printBtn.textContent = 'Drucken';
+    printBtn.className = 'tab-link';
+    printBtn.id = 'print-aufgaben';
+    printBtn.addEventListener('click', function() {
+        const printContents = document.getElementById('aufgaben-container').innerHTML;
+        const iframe = document.createElement('iframe');
+        iframe.style.position = 'absolute';
+        iframe.style.width = '0';
+        iframe.style.height = '0';
+        iframe.style.border = '0';
+        document.body.appendChild(iframe);
+        const doc = iframe.contentWindow.document;
+        doc.open();
+        doc.write('<html><head><title>Drucken</title></head><body>' + printContents + '</body></html>');
+        doc.close();
+        iframe.contentWindow.focus();
+        iframe.contentWindow.print();
+        setTimeout(() => document.body.removeChild(iframe), 1000);
+    });
+    
+    // Добавляем кнопки в контейнер
+    const container = document.getElementById('aufgaben-container');
+    const buttonContainer = document.createElement('div');
+    buttonContainer.style.marginTop = '20px';
+    buttonContainer.appendChild(showBtn);
+    buttonContainer.appendChild(printBtn);
+    container.appendChild(buttonContainer);
+}
+
+// Ожидаем полной загрузки DOM
+document.addEventListener('DOMContentLoaded', function() {
+    // Загружаем шаблоны при запуске
+    loadTemplates().then(() => {
+        console.log('Templates erfolgreich geladen');
+    }).catch(error => {
+        console.error('Fehler beim Laden der Templates:', error);
+    });
+
+    // Обработчик для кнопки Geschwindigkeit / Zeit
+    const geschwindigkeitLink = document.getElementById('text-geschwindigkeit-link');
+    if (geschwindigkeitLink) {
+        geschwindigkeitLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Сначала скрываем все фильтры
+            hideAllFiltersAndReset();
+            
+            // Показываем фильтр Geschwindigkeit
+            const geschwindigkeitFilter = document.getElementById('geschwindigkeit-filter');
+            if (geschwindigkeitFilter) {
+                geschwindigkeitFilter.style.display = 'block';
+            }
+        });
+    }
+
+    // Обработчики для основных навигационных ссылок
+    document.querySelectorAll('nav a').forEach(link => {
+        link.addEventListener('click', () => {
+            hideAllFiltersAndReset();
+        });
+    });
+
+    // Обработчики для вкладок Rechenbeispiele и Textaufgaben
+    const rechenTab = document.getElementById('rechen-tab');
+    const textTab = document.getElementById('text-tab');
+    
+    if (rechenTab) {
+        rechenTab.addEventListener('click', () => {
+            hideAllFiltersAndReset();
+        });
+    }
+    
+    if (textTab) {
+        textTab.addEventListener('click', () => {
+            hideAllFiltersAndReset();
+        });
+    }
+
+    // Обработчик для кнопки Generieren
+   const generateButton = document.getElementById('generate-geschwindigkeit');
+if (generateButton) {
+    generateButton.addEventListener('click', function(e) {
+        e.preventDefault();
+        let anzahl = document.getElementById('anzahl-geschwindigkeit-aufgaben').value;
+        let operation = document.getElementById('geschwindigkeit-operation').value;
+        let schwierigkeit = document.getElementById('geschwindigkeit-schwierigkeit').value;
+        
+        // Если какое-то поле не выбрано - выбираем случайное значение
+        if (!anzahl) {
+            const anzahlOptions = [5, 10, 15, 20];
+            anzahl = anzahlOptions[Math.floor(Math.random() * anzahlOptions.length)];
+            document.getElementById('anzahl-geschwindigkeit-aufgaben').value = anzahl;
+        }
+        
+        if (!operation) {
+            const operationOptions = ['geschwindigkeit', 'strecke', 'zeit', 'mischung'];
+            operation = operationOptions[Math.floor(Math.random() * operationOptions.length)];
+            document.getElementById('geschwindigkeit-operation').value = operation;
+        }
+        
+        if (!schwierigkeit) {
+            const schwierigkeitOptions = ['einfach', 'mittel', 'schwer'];
+            schwierigkeit = schwierigkeitOptions[Math.floor(Math.random() * schwierigkeitOptions.length)];
+            document.getElementById('geschwindigkeit-schwierigkeit').value = schwierigkeit;
+        }
+        
+        // Показываем общий контейнер с задачами
+        document.getElementById('aufgaben-container').style.display = 'block';
+        
+        // Генерация задач Geschwindigkeit
+        generateGeschwindigkeitAufgaben(parseInt(anzahl), operation, schwierigkeit);
+        
+        // Добавляем кнопки управления
+        addControlButtons();
+    });
+}
+});
