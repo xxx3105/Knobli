@@ -955,6 +955,7 @@ if (generateButton) {
 
 //БАБОЧКИ
 // Функция создания бабочек
+
 function createButterflies(event) {
     const button = event.currentTarget;
     const rect = button.getBoundingClientRect();
@@ -1025,7 +1026,18 @@ function createButterfly(startX, startY) {
 // Добавляем обработчик к кнопке
 document.addEventListener('DOMContentLoaded', function() {
     const generateButton = document.getElementById('generate');
+    const generateButtonTwo = document.getElementById('generate-geschwindigkeit');
     if (generateButton) {
         generateButton.addEventListener('click', createButterflies);
     }
+
+    if (generateButtonTwo) {
+        generateButtonTwo.addEventListener('click', createButterflies);
+    }
+
+
 });
+
+
+
+
