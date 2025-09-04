@@ -583,3 +583,22 @@ nav a {
 }
 
      }
+
+
+     @media (max-width: 1085px) {
+    /* Навигация */
+.section{
+width: 92%;
+padding: 20px 10px;
+ 
+}
+
+body{
+font-size: 12px;
+}
+
+nav a {
+    font-size: 14px;
+}
+
+     }
