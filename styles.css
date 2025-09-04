@@ -1,7 +1,7 @@
  
 
 body {
-     font-family: 'Comic Sans MS', 'Baloo', cursive, sans-serif;
+       font-family: 'Comic Neue', 'Comic Sans MS', 'Baloo', cursive, sans-serif;
     font-size: 14px;
      
     line-height: 1.5; /* межстрочный интервал */
@@ -62,6 +62,7 @@ h1, h2{color: #ff6600;
     object-fit: contain;
     transition: transform 0.05s ease-out; /* быстрее реагирует на курсор */
     cursor: pointer;
+    z-index: 9999;
 }
 
 /* *ENDE***animation */
@@ -193,7 +194,8 @@ h1, h2{color: #ff6600;
     border: 2px solid #ccc;
     border-radius: 5px;
     background-color: #f0f0f0;
-    margin:0 0;
+    margin:0  0;
+    
   }
 
     .tab-link-margin {
@@ -582,6 +584,51 @@ margin-left: 20px;
 }
 
 
+
+
+
+     /* Стили для бабочек */
+.butterfly {
+    position: fixed;
+    pointer-events: none;
+    z-index: 10000;
+    font-size: 24px;
+    animation: butterflyFly 3s ease-in forwards;
+}
+
+@keyframes butterflyFly {
+    0% {
+        opacity: 1;
+        transform: translate(0, 0) rotate(0deg) scale(1);
+    }
+    25% {
+        transform: translate(var(--x1), var(--y1)) rotate(-10deg) scale(1.2);
+    }
+    50% {
+        transform: translate(var(--x2), var(--y2)) rotate(10deg) scale(0.9);
+    }
+    75% {
+        transform: translate(var(--x3), var(--y3)) rotate(-5deg) scale(1.1);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(var(--x4), var(--y4)) rotate(0deg) scale(0.5);
+    }
+}
+
+/* Дополнительные анимации для разнообразия */
+.butterfly:nth-child(2n) {
+    animation-duration: 2.8s;
+}
+
+.butterfly:nth-child(3n) {
+    animation-duration: 3.2s;
+}
+
+
+
+
+
 /* ///TABLEN ADOPTIVE */
 
 
@@ -620,3 +667,4 @@ nav a {
 }
 
      }
+

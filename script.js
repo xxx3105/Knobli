@@ -110,29 +110,7 @@ tabLinks.forEach(link => {
 
 
 //ANIMATION VON KNOBLI
-
-// const logo = document.querySelector('.head-logo');
-// const bergen = document.querySelector('.bergen-santis');
-
-// document.addEventListener('mousemove', (e) => {
-//     const centerX = window.innerWidth / 2;
-//     const centerY = window.innerHeight / 2;
-
-//     const offsetX = (e.clientX - centerX) / centerX; // -1..1
-//     const offsetY = (e.clientY - centerY) / centerY; // -1..1
-
-//     // фон движется медленно
-//     const bgX = offsetX * 650;
-//     bergen.style.backgroundPosition = `calc(50% + ${bgX}px) center`;
-
-//     // логотип: быстрое колебание вперед + вверх/вниз
-//     const now = Date.now();
-//     const rotateAngle = offsetX * 20 + Math.sin(now / 50) * 5;      // быстрое вращение ±5°
-//     const translateX = offsetX * 50 + Math.abs(Math.sin(now / 50)) * 15; // только вперед, без отката
-//     const translateY = offsetY * 20 + Math.sin(now / 40) * 5;        // мелкое движение вверх/вниз
-
-//     logo.style.transform = `translate(${translateX}px, ${translateY}px) rotate(${rotateAngle}deg)`;
-// });
+ 
  
 const logo = document.getElementById('logo');
 
@@ -171,322 +149,7 @@ logo.addEventListener('click', () => {
 
 
 // ***********************Generator
-
-  
-// document.getElementById("generate").addEventListener("click", function(e) {
-//     e.preventDefault();
-
-//     const opSelect = document.getElementById("operationen-filter");
-//     const operation = opSelect?.value || randomChoice(["addition","subtraktion","multiplikation","division","mischung"]);
-
-//     const anzZahlenSelect = document.getElementById("anzahl-zahlen-filter");
-//     const anzahlZahlen = anzZahlenSelect?.value ? parseInt(anzZahlenSelect.value) : randomChoice([2,3]);
-
-//     const schwierigSelect = document.getElementById("schwierigkeit-filter");
-//     const schwierig = schwierigSelect?.value || randomChoice(["einfach","mittel","gross"]);
-
-//     const divisionRest = document.getElementById("division-rest-filter")?.value || "ohne-rest";
-
-//     const anzAufgabenSelect = document.getElementById("anzahl-aufgaben-filter");
-//     const anzahlAufgaben = anzAufgabenSelect?.value ? parseInt(anzAufgabenSelect.value) : 5;
-
-//     let min = 1, max = 10;
-//     switch(schwierig) {
-//         case "einfach":        min = 1; max = 10; break;
-//         case "mittel":         min = 10; max = 100; break;
-//         case "gross":          min = 100; max = 1000; break;
-//         case "sehr-gross":     min = 1000; max = 10000; break;
-//         case "riesig":         min = 10000; max = 100000; break;
-//     }
-
-//     function randNum() { return Math.floor(Math.random() * (max - min + 1)) + min; }
-//     function randomChoice(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
-
-//     const liste = document.getElementById("aufgaben-liste");
-//     liste.innerHTML = "";
-
-//     let aufgabenDaten = [];
-
-//     for (let i=0; i<anzahlAufgaben; i++) {
-//         let zahlen = [];
-//         for (let j=0; j<anzahlZahlen; j++) {
-//             zahlen.push(randNum());
-//         }
-
-//         let aufgabe = "";
-//         let korrekteAntwort = null;
-
-//         if (operation === "mischung") {
-//             const ops = ["+", "−", "×", "÷"];
-//             let expr = "" + zahlen[0];
-//             for (let k=1; k<zahlen.length; k++) {
-//                 let zufallOp = ops[Math.floor(Math.random() * ops.length)];
-//                 expr += " " + zufallOp + " " + zahlen[k];
-//             }
-//             aufgabe = expr;
-//             korrekteAntwort = Function('"use strict";return (' + expr.replace(/×/g,"*").replace(/÷/g,"/").replace(/−/g,"-") + ')')();
-//         } else {
-//             let zeichen = "";
-//             switch(operation) {
-//                 case "addition": zeichen = " + "; break;
-//                 case "subtraktion": zeichen = " − "; break;
-//                 case "multiplikation": zeichen = " × "; break;
-//                 case "division": zeichen = " ÷ "; break;
-//             }
-//             aufgabe = zahlen.join(zeichen);
-
-//             if (operation === "division") {
-//                 if (divisionRest === "ohne-rest") {
-//                     let divisor = Math.floor(Math.random() * 12) + 1;
-//                     let quotient = Math.floor(Math.random() * 12) + 1;
-//                     let dividend = divisor * quotient;
-//                     aufgabe = dividend + " ÷ " + divisor;
-//                     korrekteAntwort = quotient;
-//                 } else {
-//                     let divisor = Math.floor(Math.random() * 12) + 2;
-//                     let dividend = Math.floor(Math.random() * 90) + 10;
-//                     let quotient = Math.floor(dividend / divisor);
-//                     let rest = dividend % divisor;
-//                     aufgabe = dividend + " ÷ " + divisor;
-//                     korrekteAntwort = quotient + " Rest " + rest;
-//                 }
-//             } else {
-//                 korrekteAntwort = Function('"use strict";return (' + aufgabe.replace(/×/g,"*").replace(/÷/g,"/").replace(/−/g,"-") + ')')();
-//             }
-//         }
-
-//         aufgabenDaten.push({aufgabe, korrekteAntwort});
-//     }
-
-//     // создаём список заданий
-//     aufgabenDaten.forEach((item,i) => {
-//         const li = document.createElement("li");
-
-//         const span = document.createElement("span");
-//         span.textContent = (i+1) + ") " + item.aufgabe + " = ";
-
-//         const input = document.createElement("input");
-//         input.type = "text";
-//         input.size = 6;
-
-//         input.addEventListener("input", function() {
-//             let val = input.value.trim();
-//             if (val === "") {
-//                 input.style.backgroundColor = "";
-//                 return;
-//             }
-//             if (val === String(item.korrekteAntwort) || Number(val) === item.korrekteAntwort) {
-//                 input.style.backgroundColor = "#c8f7c5";
-//             } else {
-//                 input.style.backgroundColor = "#f7c5c5";
-//             }
-//         });
-
-//         const solution = document.createElement("span");
-//         solution.textContent = " (" + item.korrekteAntwort + ")";
-//         solution.style.display = "none";
-//         solution.classList.add("solution");
-
-//         li.appendChild(span);
-//         li.appendChild(input);
-//         li.appendChild(solution);
-//         liste.appendChild(li);
-//     });
-
-//     document.getElementById("aufgaben-container").style.display = "block";
-
-//     // кнопка показать все ответы внутри контейнера
-//     let showBtn = document.createElement("button");
-//     showBtn.textContent = "Alle Antworten zeigen";
-//     showBtn.addEventListener("click", function() {
-//         document.querySelectorAll(".solution").forEach(el => el.style.display = "inline");
-//     });
-
-//     // убираем старую кнопку
-//     const oldBtn = document.getElementById("show-answers-inline");
-//     if(oldBtn) oldBtn.remove();
-
-//     showBtn.id = "show-answers-inline";
-//     document.getElementById("aufgaben-container").appendChild(showBtn);
-// });
-
-
-// document.getElementById("generate").addEventListener("click", function(e) {
-//     e.preventDefault();
-
-//     const opSelect = document.getElementById("operationen-filter");
-//     const operation = opSelect?.value || randomChoice(["addition","subtraktion","multiplikation","division","mischung"]);
-
-//     const anzZahlenSelect = document.getElementById("anzahl-zahlen-filter");
-//     const anzahlZahlen = anzZahlenSelect?.value ? parseInt(anzZahlenSelect.value) : randomChoice([2,3]);
-
-//     const schwierigSelect = document.getElementById("schwierigkeit-filter");
-//     const schwierig = schwierigSelect?.value || randomChoice(["einfach","mittel","gross"]);
-
-//     const divisionRest = document.getElementById("division-rest-filter")?.value || "ohne-rest";
-
-//     const anzAufgabenSelect = document.getElementById("anzahl-aufgaben-filter");
-//     const anzahlAufgaben = anzAufgabenSelect?.value ? parseInt(anzAufgabenSelect.value) : 5;
-
-//     let min = 1, max = 10;
-//     switch(schwierig) {
-//         case "einfach":        min = 1; max = 10; break;
-//         case "mittel":         min = 10; max = 100; break;
-//         case "gross":          min = 100; max = 1000; break;
-//         case "sehr-gross":     min = 1000; max = 10000; break;
-//         case "riesig":         min = 10000; max = 100000; break;
-//     }
-
-//     function randNum() { return Math.floor(Math.random() * (max - min + 1)) + min; }
-//     function randomChoice(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
-
-//     const liste = document.getElementById("aufgaben-liste");
-//     liste.innerHTML = "";
-
-//     let aufgabenDaten = [];
-
-//     for (let i=0; i<anzahlAufgaben; i++) {
-//         let zahlen = [];
-//         for (let j=0; j<anzahlZahlen; j++) {
-//             zahlen.push(randNum());
-//         }
-
-//         let aufgabe = "";
-//         let korrekteAntwort = null;
-
-//         if (operation === "mischung") {
-//             const ops = ["+", "−", "×", "÷"];
-//             let expr = "" + zahlen[0];
-//             for (let k=1; k<zahlen.length; k++) {
-//                 let zufallOp = ops[Math.floor(Math.random() * ops.length)];
-//                 expr += " " + zufallOp + " " + zahlen[k];
-//             }
-//             aufgabe = expr;
-//             korrekteAntwort = Function('"use strict";return (' + expr.replace(/×/g,"*").replace(/÷/g,"/").replace(/−/g,"-") + ')')();
-//         } else {
-//             let zeichen = "";
-//             switch(operation) {
-//                 case "addition": zeichen = " + "; break;
-//                 case "subtraktion": zeichen = " − "; break;
-//                 case "multiplikation": zeichen = " × "; break;
-//                 case "division": zeichen = " ÷ "; break;
-//             }
-//             aufgabe = zahlen.join(zeichen);
-
-//             if (operation === "division") {
-//                 if (divisionRest === "ohne-rest") {
-//                     let divisor = Math.floor(Math.random() * 12) + 1;
-//                     let quotient = Math.floor(Math.random() * 12) + 1;
-//                     let dividend = divisor * quotient;
-//                     aufgabe = dividend + " ÷ " + divisor;
-//                     korrekteAntwort = quotient;
-//                 } else {
-//                     let divisor = Math.floor(Math.random() * 12) + 2;
-//                     let dividend = Math.floor(Math.random() * 90) + 10;
-//                     let quotient = Math.floor(dividend / divisor);
-//                     let rest = dividend % divisor;
-//                     aufgabe = dividend + " ÷ " + divisor;
-//                     korrekteAntwort = quotient + " Rest " + rest;
-//                 }
-//             } else {
-//                 korrekteAntwort = Function('"use strict";return (' + aufgabe.replace(/×/g,"*").replace(/÷/g,"/").replace(/−/g,"-") + ')')();
-//             }
-//         }
-
-//         aufgabenDaten.push({aufgabe, korrekteAntwort});
-//     }
-
-//     // создаём список заданий
-//     aufgabenDaten.forEach((item,i) => {
-//         const li = document.createElement("li");
-
-//         const span = document.createElement("span");
-//         span.textContent = (i+1) + ") " + item.aufgabe + " = ";
-
-//         const input = document.createElement("input");
-//         input.type = "text";
-//         input.size = 6;
-
-//         input.addEventListener("input", function() {
-//             let val = input.value.trim();
-//             if (val === "") {
-//                 input.style.backgroundColor = "";
-//                 return;
-//             }
-//             if (val === String(item.korrekteAntwort) || Number(val) === item.korrekteAntwort) {
-//                 input.style.backgroundColor = "#c8f7c5";
-//             } else {
-//                 input.style.backgroundColor = "#f7c5c5";
-//             }
-
-//             // проверка всех ответов
-//             const allCorrect = [...liste.querySelectorAll("input")].every(inp => {
-//                 return inp.value.trim() === "" ? false : inp.style.backgroundColor === "rgb(200, 247, 197)";
-//             });
-//             if(allCorrect) animateLogo();
-//         });
-
-//         const solution = document.createElement("span");
-//         solution.textContent = " (" + item.korrekteAntwort + ")";
-//         solution.style.display = "none";
-//         solution.classList.add("solution");
-
-//         li.appendChild(span);
-//         li.appendChild(input);
-//         li.appendChild(solution);
-//         liste.appendChild(li);
-//     });
-
-//     document.getElementById("aufgaben-container").style.display = "block";
-
-//     // кнопка показать все ответы внутри контейнера
-//     let showBtn = document.createElement("button");
-//     showBtn.textContent = "Alle Antworten zeigen";
-//     showBtn.addEventListener("click", function() {
-//         document.querySelectorAll(".solution").forEach(el => el.style.display = "inline");
-//     });
-//     const oldBtn = document.getElementById("show-answers-inline");
-//     if(oldBtn) oldBtn.remove();
-//     showBtn.id = "show-answers-inline";
-//     document.getElementById("aufgaben-container").appendChild(showBtn);
-
-//     // кнопка печать
-//     let printBtn = document.createElement("button");
-//     printBtn.textContent = "Drucken";
-//     printBtn.addEventListener("click", function() {
-//         window.print();
-//     });
-//     const oldPrint = document.getElementById("print-aufgaben");
-//     if(oldPrint) oldPrint.remove();
-//     printBtn.id = "print-aufgaben";
-//     document.getElementById("aufgaben-container").appendChild(printBtn);
-
-//     // функция анимации логотипа
-//     function animateLogo() {
-//         const logo = document.querySelector('.head-logo');
-//         const rect = logo.getBoundingClientRect();
-//         const centerX = window.innerWidth/2 - rect.width/2;
-//         const centerY = window.innerHeight/2 - rect.height/2;
-
-//         logo.style.transition = "all 1s";
-//         logo.style.position = "fixed";
-//         logo.style.left = rect.left + "px";
-//         logo.style.top = rect.top + "px";
-//         logo.style.transform = "rotate(0deg)";
-
-//         setTimeout(()=>{
-//             logo.style.left = centerX + "px";
-//             logo.style.top = centerY + "px";
-//             logo.style.transform = "rotate(360deg)";
-//         }, 50);
-
-//         setTimeout(()=>{
-//             logo.style.left = rect.left + "px";
-//             logo.style.top = rect.top + "px";
-//             logo.style.transform = "rotate(0deg)";
-//         }, 1100);
-//     }
-// });
+ 
 
 document.getElementById("generate").addEventListener("click", function(e) {
     e.preventDefault();
@@ -697,8 +360,9 @@ document.getElementById("generate").addEventListener("click", function(e) {
 // ***********************ENDE Generator
 
 
-//TEXTAUFGABE GENERATO
- // Функция для загрузки шаблонов из внешнего файла
+// //TEXTAUFGABE GENERATO
+ 
+
 async function loadTemplates() {
     try {
         // Пробуем загрузить шаблоны из внешнего файла
@@ -763,7 +427,7 @@ async function loadTemplates() {
             
             <!-- Template 7 -->
             <div class="aufgabe-template" data-id="7" data-type="geschwindigkeit">
-                Ein E-Roller fährt {strecke} km in {zeit} Stunden. Welche Geschwindigkeit hat er?
+                Ein E-Roller fährt {strecke} km in {zeit} Stunden. Welche Geschwindigkeit hat he
             </div>
             
             <!-- Template 8 -->
@@ -1055,9 +719,74 @@ function checkAllAnswers() {
     }
 }
 
-// Функция поздравления
+// --- Функция поздравления и анимации логотипа ---
 function showGratulationAndAnimateLogo() {
-    alert('Gratulation! Alle Antworten sind richtig!');
+    // создаём надпись
+    if (!document.getElementById("gratulation-msg")) {
+        const msg = document.createElement("div");
+        msg.id = "gratulation-msg";
+        msg.textContent = "Gratulation! Du bist ein Genie!";
+        msg.style.position = "fixed";
+        msg.style.top = "50%";
+        msg.style.left = "50%";
+        msg.style.transform = "translate(-50%, -50%) scale(0.1)";
+        msg.style.fontSize = "2em";
+        msg.style.fontWeight = "bold";
+        msg.style.color = "#f39c12";
+        msg.style.backgroundColor = "rgba(255,255,255,0.9)";
+        msg.style.padding = "20px 40px";
+        msg.style.borderRadius = "10px";
+        msg.style.textAlign = "center";
+        msg.style.transition = "transform 0.8s ease";
+        msg.style.zIndex = "1";
+        document.body.appendChild(msg);
+
+
+        setTimeout(() => msg.style.transform = "translate(-50%, -50%) scale(1)", 50);
+        setTimeout(() => msg.remove(), 3000);
+    }
+
+    const logo = document.querySelector(".head-logo");
+    if (!logo) return;
+
+    // сохраняем исходные стили
+    const originalStyle = {
+        position: logo.style.position || "",
+        top: logo.style.top || "",
+        left: logo.style.left || "",
+        transform: logo.style.transform || "",
+        transition: logo.style.transition || ""
+    };
+
+    const rect = logo.getBoundingClientRect();
+    const initialTop = rect.top + window.scrollY;
+    const initialLeft = rect.left + window.scrollX;
+
+    logo.style.position = "fixed";
+    logo.style.left = initialLeft + "px";
+    logo.style.top = initialTop + "px";
+    logo.style.transition = "top 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55), transform 0.6s ease";
+
+    const centerY = window.innerHeight / 2 - logo.offsetHeight / 2;
+
+    // падение вниз с вращением
+    setTimeout(() => {
+        logo.style.top = centerY + "px";
+        logo.style.transform = "rotate(360deg)";
+    }, 50);
+
+    // возврат в исходное положение с восстановлением стилей
+    setTimeout(() => {
+        logo.style.top = initialTop + "px";
+        logo.style.transform = "rotate(0deg)";
+        setTimeout(() => {
+            logo.style.position = originalStyle.position;
+            logo.style.top = originalStyle.top;
+            logo.style.left = originalStyle.left;
+            logo.style.transform = originalStyle.transform;
+            logo.style.transition = originalStyle.transition;
+        }, 600); // ждём окончания анимации
+    }, 800);
 }
 
 // Функция для скрытия всех фильтров и сброса задач
@@ -1220,4 +949,83 @@ if (generateButton) {
         addControlButtons();
     });
 }
+});
+
+
+
+//БАБОЧКИ
+// Функция создания бабочек
+function createButterflies(event) {
+    const button = event.currentTarget;
+    const rect = button.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+    
+    // Создаем 12-15 бабочек
+    const butterflyCount = 12 + Math.floor(Math.random() * 4);
+    
+    for (let i = 0; i < butterflyCount; i++) {
+        setTimeout(() => {
+            createButterfly(centerX, centerY);
+        }, i * 100); // Задержка между созданием бабочек
+    }
+}
+
+function createButterfly(startX, startY) {
+    const butterfly = document.createElement('div');
+    butterfly.className = 'butterfly';
+    butterfly.innerHTML = '🦋';
+    
+    // Случайное направление и расстояние
+    const angle = Math.random() * Math.PI * 2;
+    const distance = 200 + Math.random() * 300;
+    
+    // Точки траектории
+    const x1 = Math.cos(angle) * distance * 0.3;
+    const y1 = Math.sin(angle) * distance * 0.3 - 50;
+    const x2 = Math.cos(angle) * distance * 0.6;
+    const y2 = Math.sin(angle) * distance * 0.6 - 80;
+    const x3 = Math.cos(angle) * distance * 0.8;
+    const y3 = Math.sin(angle) * distance * 0.8 - 100;
+    const x4 = Math.cos(angle) * distance;
+    const y4 = Math.sin(angle) * distance - 120;
+    
+    // Устанавливаем CSS переменные для анимации
+    butterfly.style.setProperty('--x1', `${x1}px`);
+    butterfly.style.setProperty('--y1', `${y1}px`);
+    butterfly.style.setProperty('--x2', `${x2}px`);
+    butterfly.style.setProperty('--y2', `${y2}px`);
+    butterfly.style.setProperty('--x3', `${x3}px`);
+    butterfly.style.setProperty('--y3', `${y3}px`);
+    butterfly.style.setProperty('--x4', `${x4}px`);
+    butterfly.style.setProperty('--y4', `${y4}px`);
+    
+    // Начальная позиция
+    butterfly.style.left = `${startX}px`;
+    butterfly.style.top = `${startY}px`;
+    
+    // Случайный размер
+    const size = 0.8 + Math.random() * 0.7;
+    butterfly.style.fontSize = `${size}em`;
+    
+    // Случайный цветовой оттенок
+    const hue = Math.random() * 360;
+    butterfly.style.filter = `hue-rotate(${hue}deg) brightness(1.2)`;
+    
+    document.body.appendChild(butterfly);
+    
+    // Удаляем бабочку после анимации
+    setTimeout(() => {
+        if (butterfly.parentNode) {
+            butterfly.parentNode.removeChild(butterfly);
+        }
+    }, 3000);
+}
+
+// Добавляем обработчик к кнопке
+document.addEventListener('DOMContentLoaded', function() {
+    const generateButton = document.getElementById('generate');
+    if (generateButton) {
+        generateButton.addEventListener('click', createButterflies);
+    }
 });
