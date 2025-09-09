@@ -150,8 +150,7 @@ logo.addEventListener('click', () => {
 
 // ***********************Generator
  
-
-document.getElementById("generate").addEventListener("click", function(e) {
+ document.getElementById("generate").addEventListener("click", function(e) {
     e.preventDefault();
 
     // --- Вспомогательные функции ---
@@ -177,22 +176,61 @@ document.getElementById("generate").addEventListener("click", function(e) {
     const liste = document.getElementById("aufgaben-liste");
     liste.innerHTML = "";
 
+    // Добавляем подсказку о формате ответа для деления с остатком
+    if (operation === "division" && divisionRest === "mit-rest") {
+        const hint = document.createElement("div");
+        hint.style.color = "#666";
+        hint.style.marginBottom = "10px";
+        hint.style.fontStyle = "italic";
+        hint.textContent = "Hinweis: Bei Division mit Rest bitte das Ergebnis im Format 'Quotient Rest Restwert' eingeben (z.B. 52÷7 = '7 Rest 3').";
+        liste.appendChild(hint);
+    }
+
     let aufgabenDaten = [];
 
     // --- Генерация задач ---
     for (let i = 0; i < anzahlAufgaben; i++) {
-        let zahlen = [];
-        for (let j = 0; j < anzahlZahlen; j++) zahlen.push(randNum(min, max));
-
-        // Для вычитания: результат положительный
-        if ((operation === "subtraktion" || operation === "mischung") && zahlen.length === 2 && zahlen[0] < zahlen[1]) {
-            [zahlen[0], zahlen[1]] = [zahlen[1], zahlen[0]];
-        }
-
         let aufgabe = "";
         let korrekteAntwort = null;
 
-        if (operation === "mischung") {
+        if (operation === "division") {
+            if (divisionRest === "ohne-rest") {
+                // Для деления без остатка с огромными числами
+                let divisor = randNum(2, Math.floor(max / 100)); // Делитель не должен быть слишком большим
+                let quotient = randNum(Math.ceil(min / divisor), Math.floor(max / divisor));
+                let dividend = divisor * quotient;
+                
+                // Гарантируем, что числа находятся в нужном диапазоне
+                while (dividend < min || dividend > max) {
+                    divisor = randNum(2, Math.floor(max / 100));
+                    quotient = randNum(Math.ceil(min / divisor), Math.floor(max / divisor));
+                    dividend = divisor * quotient;
+                }
+                
+                aufgabe = dividend + " ÷ " + divisor;
+                korrekteAntwort = quotient;
+            } else {
+                // Для деления с остатком
+                let divisor = randNum(2, Math.floor(max / 100));
+                let quotient = randNum(Math.ceil(min / divisor), Math.floor(max / divisor));
+                let rest = randNum(1, divisor - 1); // Остаток должен быть меньше делителя
+                let dividend = divisor * quotient + rest;
+                
+                // Гарантируем, что числа находятся в нужном диапазоне
+                while (dividend < min || dividend > max) {
+                    divisor = randNum(2, Math.floor(max / 100));
+                    quotient = randNum(Math.ceil(min / divisor), Math.floor(max / divisor));
+                    rest = randNum(1, divisor - 1);
+                    dividend = divisor * quotient + rest;
+                }
+                
+                aufgabe = dividend + " ÷ " + divisor;
+                korrekteAntwort = quotient + " Rest " + rest;
+            }
+        } else if (operation === "mischung") {
+            let zahlen = [];
+            for (let j = 0; j < anzahlZahlen; j++) zahlen.push(randNum(min, max));
+            
             const ops = ["+", "−", "×", "÷"];
             let expr = "" + zahlen[0];
             for (let k = 1; k < zahlen.length; k++) {
@@ -203,25 +241,17 @@ document.getElementById("generate").addEventListener("click", function(e) {
             aufgabe = expr;
             korrekteAntwort = Function('"use strict";return (' + expr.replace(/×/g,"*").replace(/÷/g,"/").replace(/−/g,"-") + ')')();
         } else {
+            let zahlen = [];
+            for (let j = 0; j < anzahlZahlen; j++) zahlen.push(randNum(min, max));
+
+            // Для вычитания: результат положительный
+            if (operation === "subtraktion" && zahlen.length === 2 && zahlen[0] < zahlen[1]) {
+                [zahlen[0], zahlen[1]] = [zahlen[1], zahlen[0]];
+            }
+
             let zeichen = {addition:" + ", subtraktion:" − ", multiplikation:" × ", division:" ÷ "}[operation];
             aufgabe = zahlen.join(zeichen);
-
-            if (operation === "division") {
-                if (divisionRest === "ohne-rest") {
-                    let divisor = randNum(1,12), quotient = randNum(1,12);
-                    let dividend = divisor * quotient;
-                    aufgabe = dividend + " ÷ " + divisor;
-                    korrekteAntwort = quotient;
-                } else {
-                    let divisor = randNum(2,12), dividend = randNum(10,99);
-                    let quotient = Math.floor(dividend / divisor);
-                    let rest = dividend % divisor;
-                    aufgabe = dividend + " ÷ " + divisor;
-                    korrekteAntwort = quotient + " Rest " + rest;
-                }
-            } else {
-                korrekteAntwort = Function('"use strict";return (' + aufgabe.replace(/×/g,"*").replace(/÷/g,"/").replace(/−/g,"-") + ')')();
-            }
+            korrekteAntwort = Function('"use strict";return (' + aufgabe.replace(/×/g,"*").replace(/÷/g,"/").replace(/−/g,"-") + ')')();
         }
 
         aufgabenDaten.push({aufgabe, korrekteAntwort});
@@ -235,15 +265,36 @@ document.getElementById("generate").addEventListener("click", function(e) {
 
         const input = document.createElement("input");
         input.type = "text";
-        input.size = 6;
+        input.size = operation === "division" && divisionRest === "mit-rest" ? 15 : 10;
 
         input.addEventListener("input", function() {
             const val = input.value.trim();
-            if (val === "") { input.style.backgroundColor = ""; return; }
-            input.style.backgroundColor = (val === String(item.korrekteAntwort) || Number(val) === item.korrekteAntwort) ? "#c8f7c5" : "#f7c5c5";
+            if (val === "") { 
+                input.style.backgroundColor = ""; 
+                return; 
+            }
+            
+            // Для деления с остатком сравниваем строки, для остальных операций - числа
+            if (operation === "division" && divisionRest === "mit-rest") {
+                input.style.backgroundColor = val === item.korrekteAntwort ? "#c8f7c5" : "#f7c5c5";
+            } else {
+                input.style.backgroundColor = (val === String(item.korrekteAntwort) || Number(val) === item.korrekteAntwort) ? "#c8f7c5" : "#f7c5c5";
+            }
 
             // Проверка всех ответов
-            const allCorrect = [...liste.querySelectorAll("input")].every(inp => inp.value.trim() !== "" && inp.style.backgroundColor === "rgb(200, 247, 197)");
+            const allCorrect = [...liste.querySelectorAll("input")].every(inp => {
+                if (inp.value.trim() === "") return false;
+                
+                const index = [...liste.querySelectorAll("input")].indexOf(inp);
+                const correctAnswer = aufgabenDaten[index].korrekteAntwort;
+                
+                if (operation === "division" && divisionRest === "mit-rest") {
+                    return inp.value.trim() === correctAnswer;
+                } else {
+                    return inp.value.trim() === String(correctAnswer) || Number(inp.value.trim()) === correctAnswer;
+                }
+            });
+            
             if(allCorrect) showGratulationAndAnimateLogo();
         });
 
@@ -353,7 +404,7 @@ document.getElementById("generate").addEventListener("click", function(e) {
                 logo.style.left = originalStyle.left;
                 logo.style.transform = originalStyle.transform;
                 logo.style.transition = originalStyle.transition;
-            }, 600); // ждём окончания анимации
+            }, 600);
         }, 800);
     }
 });
